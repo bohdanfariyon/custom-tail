@@ -12,7 +12,6 @@ def cli(file, lines, follow):
     Displays the last part of a file. Mimics the GNU tail command.
     """
     if not follow:
-        # Простий режим: показати останні N рядків і вийти
         all_lines = file.readlines()
         last_lines = all_lines[-lines:]
         sys.stdout.writelines(last_lines)
@@ -24,12 +23,11 @@ def cli(file, lines, follow):
         sys.stdout.writelines(last_lines)
         sys.stdout.flush()
 
-        # Починаємо стежити
         while True:
             where = file.tell()
             new_line = file.readline()
             if not new_line:
-                time.sleep(0.5) # Затримка, щоб не навантажувати CPU
+                time.sleep(0.5) 
                 file.seek(where)
             else:
                 sys.stdout.write(new_line)
